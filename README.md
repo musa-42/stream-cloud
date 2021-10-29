@@ -1,5 +1,4 @@
 # stream-cloud
-Robot to convert files to direct links, hosting files on Telegram servers, unlimited and without restrictions
 
 demo : https://t.me/downloader_star_bot
 

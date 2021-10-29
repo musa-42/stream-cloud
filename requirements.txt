@@ -1,0 +1,8 @@
+cryptg
+hachoir
+pillow
+werkzeug
+aiohttp
+Telethon
+requests
+gunicorn

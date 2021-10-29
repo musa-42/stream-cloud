@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    restart: always
+    command: ./start.sh
+    ports:
+      - 8080:8080
+
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - 80:80
+    depends_on: 
+      - web

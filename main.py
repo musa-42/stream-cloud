@@ -10,6 +10,7 @@ async def main():
             web.get('/', server.hello),
             web.get('/favicon.ico', server.hello),
             web.get('/{id}', server.Downloader),
+            web.get('/{id}/{name}', server.Downloader),
         ]
     )
     return app

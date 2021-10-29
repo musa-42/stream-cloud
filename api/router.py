@@ -13,8 +13,7 @@ class Router:
         return web.Response(text="Hello, world")
 
     async def Downloader(self, request):
-        id_str = request.match_info.get("id").split('--')
-        id_hex = id_str[0]
+        id_hex = request.match_info.get("id")
         
         try:
             id = int(id_hex,16)
@@ -42,7 +41,7 @@ class Router:
         download_skip = (offset // self.BLOCK_SIZE) * self.BLOCK_SIZE
         read_skip = offset - download_skip
         
-        name = self.get_file_name(message)
+        name = request.match_info.get("name") or self.get_file_name(message)
 
         if download_skip >= file_size:
             return web.HTTPRequestRangeNotSatisfiable()

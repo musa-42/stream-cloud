@@ -42,10 +42,7 @@ class Router:
         download_skip = (offset // self.BLOCK_SIZE) * self.BLOCK_SIZE
         read_skip = offset - download_skip
         
-        try:
-            name = id_str[1]
-        except IndexError:
-            name = self.get_file_name(message)
+        name = self.get_file_name(message)
 
         if download_skip >= file_size:
             return web.HTTPRequestRangeNotSatisfiable()

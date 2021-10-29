@@ -1,6 +1,7 @@
 # stream-cloud
 
-demo : https://t.me/downloader_star_bot
+demo : [downloader_star_bot](https://t.me/downloader_star_bot)
+
 
 # Run :
 

@@ -30,15 +30,16 @@ def get_file_name(message):
 
 @client.on(events.NewMessage)
 async def download(event):
-    if event.is_private :
-        try:
-            await event.client(functions.channels.GetParticipantRequest(
-                channel = Config.CHANNEL_USERNAME,
-                participant = event.sender_id
-                ))
-        except errors.UserNotParticipantError:
-            await event.reply(f"First join to our official channel to access the bot or get the newest news about the bot\n\n@{Config.CHANNEL_USERNAME}\n\nAfter that /start the bot aging.")
-            return
+    if (pv := event.is_private) or (gp := event.is_group) :
+        if pv:
+            try:
+                await event.client(functions.channels.GetParticipantRequest(
+                    channel = Config.CHANNEL_USERNAME,
+                    participant = event.sender_id
+                    ))
+            except errors.UserNotParticipantError:
+                await event.reply(f"First join to our official channel to access the bot or get the newest news about the bot\n\n@{Config.CHANNEL_USERNAME}\n\nAfter that /start the bot aging.")
+                return
         
         if event.file :
             sender = await event.get_sender()

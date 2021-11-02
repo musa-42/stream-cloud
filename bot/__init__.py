@@ -42,6 +42,9 @@ async def download(event):
                 return
         
         if event.file :
+            if gp :
+                if not event.file.size > 10_000_000:
+                    return 
             sender = await event.get_sender()
             msg = await event.client.send_file(
                 Config.CHANNEL,

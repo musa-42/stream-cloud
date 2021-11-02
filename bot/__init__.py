@@ -78,8 +78,8 @@ async def download(event):
                         await forward.delete()
                         await forward_reply.edit(f"📎 : {Config.DOMAIN}/{id_name}\n\n🤖 : {bot_url}",link_preview=True)
                 return
-        
-        await event.reply("Send an file to get a link to download it")
+        if pv:
+            await event.reply("Send an file to get a link to download it")
         
 
     elif event.is_channel:

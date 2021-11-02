@@ -30,7 +30,7 @@ def get_file_name(message):
 
 @client.on(events.NewMessage)
 async def download(event):
-    if (pv := event.is_private) or (gp := event.is_group) :
+    if (pv := event.is_private) or event.is_group :
         if pv:
             try:
                 await event.client(functions.channels.GetParticipantRequest(
@@ -42,7 +42,7 @@ async def download(event):
                 return
         
         if event.file :
-            if gp :
+            if not pv :
                 if not event.file.size > 10_000_000:
                     return 
             sender = await event.get_sender()

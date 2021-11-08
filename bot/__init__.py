@@ -9,9 +9,10 @@ import re
 
 def cronjob():
     threading.Timer(60*5, cronjob).start()
-    requests.get(Config.DOMAIN)
+    requests.get(Config.DOMAIN})
     
-cronjob()
+if "heroku" in Config.DOMAIN:
+    cronjob()
 
 client = TelegramClient(
             StringSession(),
@@ -30,28 +31,24 @@ def get_file_name(message):
 
 @client.on(events.NewMessage)
 async def download(event):
-    if (pv := event.is_private) or event.is_group :
-        if pv:
-            try:
-                await event.client(functions.channels.GetParticipantRequest(
-                    channel = Config.CHANNEL_USERNAME,
-                    participant = event.sender_id
-                    ))
-            except errors.UserNotParticipantError:
-                await event.reply(f"First join to our official channel to access the bot or get the newest news about the bot\n\n@{Config.CHANNEL_USERNAME}\n\nAfter that /start the bot aging.")
-                return
+    if event.is_private :
+        try:
+            await event.client(functions.channels.GetParticipantRequest(
+                channel = Config.CHANNEL_USERNAME,
+                participant = event.sender_id
+                ))
+        except errors.UserNotParticipantError:
+            await event.reply(f"First join to our official channel to access the bot or get the newest news about the bot\n\n@{Config.CHANNEL_USERNAME}\n\nAfter that /start the bot aging.")
+            return
         
         if event.file :
-            if not pv :
-                if not event.file.size > 10_000_000:
-                    return 
             sender = await event.get_sender()
             msg = await event.client.send_file(
                 Config.CHANNEL,
                 file=event.message.media,
-                caption=f"@{sender.username}|[{event.chat_id}](tg://user?id={event.sender_id})/{event.message.id}")
+                caption=f"@{sender.username}|[{event.sender_id}](tg://user?id={event.sender_id})/{event.message.id}")
             id_hex = hex(msg.id)[2:]
-            id = f"{id_hex}/{get_file_name(msg)}"
+            id = f"{id_hex}--{get_file_name(msg)}"
             bot_url = f"t.me/{username_bot}?start={id_hex}"
             await event.reply(f"Link to download file: \n\n📎 : {Config.DOMAIN}/{id}\n\n🤖 : {bot_url}")
             return
@@ -72,17 +69,17 @@ async def download(event):
                         if not file or not file.file :
                             return await event.reply("404! File Not Found")
                         forward = await file.forward_to(event.chat_id)
-                        id_name = f"{id_hex}/{get_file_name(msg)}"
+                        id_name = f"{id_hex}--{get_file_name(msg)}"
                         bot_url = f"t.me/{username_bot}?start={id_hex}"
-                        forward_reply = await forward.reply(f"will be deleted in 21 second. \n\n📎 : {Config.DOMAIN}/{id_name}\n\n🤖 : {bot_url}",link_preview=False)
+                        forward_reply = await forward.reply(f"will be deleted in 21 seconds. \n\n📎 : {Config.DOMAIN}/{id_name}\n\n🤖 : {bot_url}",link_preview=False)
                         await asyncio.sleep(12)
-                        await forward_reply.edit(f"will be deleted in 10 second. \n\n📎 : {Config.DOMAIN}/{id_name}\n\n🤖 : {bot_url}")
+                        await forward_reply.edit(f"will be deleted in 10 seconds. \n\n📎 : {Config.DOMAIN}/{id_name}\n\n🤖 : {bot_url}")
                         await asyncio.sleep(10)
                         await forward.delete()
                         await forward_reply.edit(f"📎 : {Config.DOMAIN}/{id_name}\n\n🤖 : {bot_url}",link_preview=True)
                 return
-        if pv:
-            await event.reply("Send an file to get a link to download it")
+        
+        await event.reply("Send any file to get a link to download it")
         
 
     elif event.is_channel:

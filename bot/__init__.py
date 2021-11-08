@@ -9,7 +9,7 @@ import re
 
 def cronjob():
     threading.Timer(60*5, cronjob).start()
-    requests.get(Config.DOMAIN})
+    requests.get(Config.DOMAIN)
     
 if "heroku" in Config.DOMAIN:
     cronjob()

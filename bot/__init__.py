@@ -48,7 +48,7 @@ async def download(event):
                 file=event.message.media,
                 caption=f"@{sender.username}|[{event.sender_id}](tg://user?id={event.sender_id})/{event.message.id}")
             id_hex = hex(msg.id)[2:]
-            id = f"{id_hex}--{get_file_name(msg)}"
+            id = f"{id_hex}/{get_file_name(msg)}"
             bot_url = f"t.me/{username_bot}?start={id_hex}"
             await event.reply(f"Link to download file: \n\n📎 : {Config.DOMAIN}/{id}\n\n🤖 : {bot_url}")
             return
@@ -69,7 +69,7 @@ async def download(event):
                         if not file or not file.file :
                             return await event.reply("404! File Not Found")
                         forward = await file.forward_to(event.chat_id)
-                        id_name = f"{id_hex}--{get_file_name(msg)}"
+                        id_name = f"{id_hex}/{get_file_name(msg)}"
                         bot_url = f"t.me/{username_bot}?start={id_hex}"
                         forward_reply = await forward.reply(f"will be deleted in 21 seconds. \n\n📎 : {Config.DOMAIN}/{id_name}\n\n🤖 : {bot_url}",link_preview=False)
                         await asyncio.sleep(12)

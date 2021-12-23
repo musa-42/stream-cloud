@@ -6,6 +6,7 @@ import asyncio
 import threading
 import requests
 import re
+from urllib.parse import quote
 
 def cronjob():
     threading.Timer(60*5, cronjob).start()
@@ -25,7 +26,7 @@ username_bot = client.get_me().username
 
 def get_file_name(message):
     if message.file.name:
-        return message.file.name.replace(" ","-")
+        return quote(message.file.name)
     ext = message.file.ext or ""
     return f"file{ext}"
 

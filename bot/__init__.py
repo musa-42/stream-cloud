@@ -86,7 +86,7 @@ async def download(event):
                 return
         
         if pv:
-            await event.reply("Send any file to get a link to download it")
+            await event.reply("Send any file and get a link to download it")
         
 
     elif event.is_channel:

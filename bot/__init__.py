@@ -36,11 +36,11 @@ async def download(event):
     if (pv := event.is_private) or event.is_group :
         if pv:
             try:
-                await event.client(functions.channels.GetParticipantRequest(
+                await client(functions.channels.GetParticipantRequest(
                     channel = Config.CHANNEL_USERNAME,
                     participant = event.sender_id
                     ))
-            except errors.UserNotParticipantError:
+            except errors.rpcerrorlist.UserNotParticipantError:
                 await event.reply(f"First join to our official channel to access the bot or get the newest news about the bot\n\n@{Config.CHANNEL_USERNAME}\n\nAfter that /start the bot aging.")
                 return
         
@@ -49,7 +49,7 @@ async def download(event):
                 if not event.file.size > 10_000_000:
                     return 
             sender = await event.get_sender()
-            msg = await event.client.send_file(
+            msg = await client.send_file(
                 Config.CHANNEL,
                 file=event.message.media,
                 caption=f"@{sender.username}|[{event.chat_id}](tg://user?id={event.sender_id})/{event.message.id}")
@@ -65,13 +65,13 @@ async def download(event):
                     id = int(id_hex,16)
                 except ValueError:
                     return
-                msg = await event.client.get_messages(Config.CHANNEL,ids=id)
+                msg = await client.get_messages(Config.CHANNEL,ids=id)
                 if not msg or not msg.file :
                     return await event.reply("404! File Not Found")
                 if regex := re.search(r"(\d*)/(\d*)",msg.message):
                     if user_id := int(regex.group(1)) :
                         msg_id = int(regex.group(2))
-                        file = await event.client.get_messages(user_id,ids=msg_id)
+                        file = await client.get_messages(user_id,ids=msg_id)
                         if not file or not file.file :
                             return await event.reply("404! File Not Found")
                         forward = await file.forward_to(event.chat_id)
@@ -96,8 +96,8 @@ async def download(event):
                 if regex := re.search(r"(\d*)/(\d*)",msg.message):
                     if user_id := int(regex.group(1)) :
                         msg_id = int(regex.group(2))
-                        if await event.client.send_message(entity=user_id, message=event.message, reply_to=msg_id):
-                            await event.client.edit_message(event.chat_id,event.id,f"{event.message.message}\n sended")
+                        if await client.send_message(entity=user_id, message=event.message, reply_to=msg_id):
+                            await client.edit_message(event.chat_id,event.id,f"{event.message.message}\n sended")
                         
                         
                     

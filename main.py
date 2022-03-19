@@ -1,9 +1,12 @@
 import api
 from aiohttp import web
-
-server = api.Client()
+import asyncio
+import logging
+logging.basicConfig(level=logging.INFO)
 
 async def main():
+    server = api.Client()
+    await server.client.start(bot_token=server.bot_token)
     app = web.Application()
     app.add_routes(
         [
@@ -16,4 +19,4 @@ async def main():
     return app
 
 if __name__ == "__main__":
-    web.run_app(main())
+    web.run_app(main(), port = 8000)

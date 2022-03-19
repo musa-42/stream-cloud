@@ -7,9 +7,9 @@ services:
     volumes:
       - .:/app
     restart: always
-    command: ./start.sh
+    command: sh start.sh
     ports:
-      - 8080:8080
+      - 8000:8000
 
   nginx:
     build: ./nginx

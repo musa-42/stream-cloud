@@ -1,6 +1,6 @@
 cryptg
 hachoir
-pillow
+#pillow
 werkzeug
 aiohttp
 Telethon

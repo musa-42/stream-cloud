@@ -4,13 +4,15 @@ from . import Router
 from config import Config
 
 class Client(Config, Router):
+    bot_token = Config.TOKEN
+    
     def __init__(self):
         self.client = TelegramClient(
             StringSession(),
             self.API_ID,
             self.API_HASH,
             # proxy=("socks5","127.0.0.1",9050)
-            ).start(bot_token=self.TOKEN)
+         )
     
     @staticmethod
     def get_file_name(message):

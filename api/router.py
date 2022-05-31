@@ -59,7 +59,7 @@ class Router:
         if read_skip > self.BLOCK_SIZE:
             return web.HTTPInternalServerError()
 
-        if range:
+        if range_http:
             headers={
                 'Content-Type': message.file.mime_type,
                 'Accept-Ranges': 'bytes',

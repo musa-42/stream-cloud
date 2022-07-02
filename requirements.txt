@@ -3,6 +3,6 @@ hachoir
 #pillow
 werkzeug
 aiohttp
-Telethon
+#Telethon
 requests
 gunicorn

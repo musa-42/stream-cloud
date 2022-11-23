@@ -63,7 +63,7 @@ class Router:
             headers={
                 'Content-Type': message.file.mime_type,
                 'Accept-Ranges': 'bytes',
-                "Content-Length": (end - offset) + 1,
+                "Content-Length": str((end - offset) + 1),
                 'Content-Range': f'bytes {offset}-{end}/{file_size}',
                 "Content-Disposition": f'inline; filename={name}' ,
             }

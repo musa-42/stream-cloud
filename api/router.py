@@ -74,10 +74,19 @@ class Router:
         cls = self.client.iter_download(message.media, offset=offset, request_size=1024*1024 )
 
         async for part in cls:
+
             if offset > end:
+
                 break
 
-            await resp.write(part)
+            try:
+
+                await resp.write(part)
+
+            except:
+
+            	break 
+
             offset += len(part)
             
         return resp

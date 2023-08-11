@@ -64,14 +64,3 @@ Management guide:
     If a file is edited in the storage channel and replaced by another file, the link will download the new file
     If a user is blocked from the support channel, he can no longer use the robot
 
-# Donate:
-
-btc:
-    `bc1qzw6l9a43f26epyme0yskz2zqzd7fppjnumnfv8`
-
-trc20:
-    `TJRA6PZoNZP5shdeJVLvGfEqWR7X4kXfuW`
-
-bep20, erc20:
-    `0x8B988133D96150a3324D0BE8124A65fB6A09612C`
-    
